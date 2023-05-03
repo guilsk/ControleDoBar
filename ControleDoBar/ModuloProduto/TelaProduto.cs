@@ -18,20 +18,32 @@ namespace Controle_do_Bar.ModuloProduto
 
         protected override void MostrarTabela(ArrayList registros)
         {
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
             Console.WriteLine($"{"Id",-1} | {"Nome", -15} | Preço");
             Console.WriteLine("-----------------------------------------");
 
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
             foreach (Produto produto in registros)
                 Console.WriteLine($"{produto.id,-2} | {produto.nome, -15} | R${produto.preco}");
+            Console.ResetColor();
         }
 
         protected override Produto ObterRegistro()
         {
-            Console.WriteLine("Digite o nome: ");
+            Console.Write("Digite o nome: ");
             string nome = Console.ReadLine();
 
-            Console.WriteLine("Digite o preço: ");
-            double preco = Convert.ToDouble(Console.ReadLine());
+            double preco;
+
+            Console.Write("Digite o preço: ");
+            try
+            {
+                preco = Convert.ToDouble(Console.ReadLine());
+            }
+            catch
+            {
+                preco = 0;
+            }
 
             return new Produto(nome, preco);
         }

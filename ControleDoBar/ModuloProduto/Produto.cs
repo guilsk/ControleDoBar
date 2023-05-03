@@ -36,8 +36,9 @@ namespace Controle_do_Bar.ModuloProduto
             if (string.IsNullOrEmpty(nome.Trim()))
                 erros.Add("O campo \"nome\" é obrigatório");
 
-            if (double.IsNaN(preco))
-                erros.Add("O campo \"preco\" é obrigatório e deve ser um número válido");
+
+            if (preco <= 0)
+                erros.Add("O campo \"preco\" deve ser um número maior que 0");
 
             return erros;
         }

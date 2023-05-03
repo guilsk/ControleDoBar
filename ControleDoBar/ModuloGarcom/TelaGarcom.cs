@@ -18,16 +18,19 @@ namespace Controle_do_Bar.ModuloGarcom
 
         protected override void MostrarTabela(ArrayList registros)
         {
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
             Console.WriteLine($"{"Id",-1} | Nome");
             Console.WriteLine("-----------------------------------------");
 
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
             foreach (Garcom garcom in registros)
-            Console.WriteLine($"{garcom.id, -2} | {garcom.nome}");
+                Console.WriteLine($"{garcom.id, -2} | {garcom.nome}");
+            Console.ResetColor();
         }
 
         protected override EntidadeBase ObterRegistro()
         {
-            Console.WriteLine("Digite o nome: ");
+            Console.Write("Digite o nome: ");
             string nome = Console.ReadLine();
 
             return new Garcom(nome);

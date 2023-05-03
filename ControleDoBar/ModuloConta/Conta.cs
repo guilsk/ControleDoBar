@@ -41,9 +41,13 @@ namespace Controle_do_Bar.ModuloConta
 
         public override ArrayList Validar()
         {
-            ArrayList erros = new ArrayList();
-            
-            //erros
+            ArrayList erros = new();
+
+            if (mesa == null)
+                erros.Add("Nenhuma mesa cadastrada");
+
+            if (garcom == null)
+                erros.Add("Nenhum garçom cadastrado");
 
             return erros;
         }

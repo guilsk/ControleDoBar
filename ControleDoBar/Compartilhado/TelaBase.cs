@@ -9,8 +9,8 @@ namespace Controle_do_Bar.Compartilhado
 {
     public abstract class TelaBase
     {
-        public string nomeEntidadeSingular;
-        public string nomeEntidadePlural;
+        public string nomeEntidadeSingular = null;
+        public string nomeEntidadePlural = null;
 
         protected RepositorioBase repositorioBase = null;
 
@@ -47,12 +47,11 @@ namespace Controle_do_Bar.Compartilhado
 
             Console.WriteLine($"Cadastro de {nomeEntidadePlural}\n");
 
+            Console.WriteLine("Digite 0 para Sair");
             Console.WriteLine($"Digite 1 para Inserir {nomeEntidadeSingular}");
             Console.WriteLine($"Digite 2 para Visualizar {nomeEntidadePlural}");
             Console.WriteLine($"Digite 3 para Editar {nomeEntidadePlural}");
             Console.WriteLine($"Digite 4 para Excluir {nomeEntidadePlural}\n");
-
-            Console.WriteLine("Digite s para Sair");
 
             string opcao = Console.ReadLine();
 
@@ -87,6 +86,7 @@ namespace Controle_do_Bar.Compartilhado
             if (registros.Count == 0)
             {
                 MostrarMensagem("Nenhum registro cadastrado", ConsoleColor.DarkYellow);
+                return;
             }
 
             MostrarTabela(registros);
@@ -95,6 +95,14 @@ namespace Controle_do_Bar.Compartilhado
         public virtual void EditarRegistro()
         {
             MostrarCabecalho($"Cadastro de {nomeEntidadePlural}", "Editando um registro já cadastrado...");
+
+            ArrayList registros = repositorioBase.SelecionarTodos();
+
+            if (registros.Count == 0)
+            {
+                MostrarMensagem("Nenhum registro cadastrado", ConsoleColor.DarkYellow);
+                return;
+            }
 
             VisualizarRegistros(false);
 
@@ -119,6 +127,14 @@ namespace Controle_do_Bar.Compartilhado
         public virtual void ExcluirRegistro()
         {
             MostrarCabecalho($"Cadastro de {nomeEntidadePlural}", "Excluindo um registro já cadastrado...");
+
+            ArrayList registros = repositorioBase.SelecionarTodos();
+
+            if (registros.Count == 0)
+            {
+                MostrarMensagem("Nenhum registro cadastrado", ConsoleColor.DarkYellow);
+                return;
+            }
 
             VisualizarRegistros(false);
 
@@ -155,7 +171,7 @@ namespace Controle_do_Bar.Compartilhado
                 }
 
                 if (idInvalido)
-                    MostrarMensagem("Id inválido, tente novamente", ConsoleColor.Red);
+                    MostrarMensagem("Id inválido, tente novamente", ConsoleColor.DarkRed);
 
             } while (idInvalido);
 

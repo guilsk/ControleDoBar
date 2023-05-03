@@ -26,108 +26,124 @@ namespace Controle_do_Bar
             TelaMesa telaMesa = new(repositorioMesa);
 
             RepositorioConta repositorioConta = new(new ArrayList());
-            TelaConta telaConta = new(repositorioConta, telaMesa, telaGarcom, telaPedido);
-            
+            TelaConta telaConta = new(repositorioConta, telaMesa, telaGarcom, telaPedido, repositorioMesa, repositorioGarcom, repositorioPedido);
 
             while (true)
             {
                 Console.Clear(); 
-                Console.WriteLine("1 - Garçom\n2 - Produto\n3 - Mesa\n4 - Conta\ns - Sair\n");
+                Console.WriteLine("0 - Sair\n1 - Garçom\n2 - Produto\n3 - Mesa\n4 - Conta\n");
                 Console.WriteLine("Selecione a opção: ");
                 string opcao = Console.ReadLine();
 
-                if (opcao == "s")
+                if (opcao == "0")
                     break;
 
                 if (opcao == "1")
                 {
-                    string subMenu = telaGarcom.ApresentarMenu();
+                    string subMenu = "";
 
-                    if (subMenu == "1")
+                    while (subMenu != "0")
                     {
-                        telaGarcom.InserirNovoRegistro();
-                    }
-                    else if (subMenu == "2")
-                    {
-                        telaGarcom.VisualizarRegistros(true);
-                        Console.ReadLine();
-                    }
-                    else if (subMenu == "3")
-                    {
-                        telaGarcom.EditarRegistro();
-                    }
-                    else if (subMenu == "4")
-                    {
-                        telaGarcom.ExcluirRegistro();
+                        subMenu = telaGarcom.ApresentarMenu();
+
+                        if (subMenu == "1")
+                        {
+                            telaGarcom.InserirNovoRegistro();
+                        }
+                        else if (subMenu == "2")
+                        {
+                            telaGarcom.VisualizarRegistros(true);
+                            Console.ReadLine();
+                        }
+                        else if (subMenu == "3")
+                        {
+                            telaGarcom.EditarRegistro();
+                        }
+                        else if (subMenu == "4")
+                        {
+                            telaGarcom.ExcluirRegistro();
+                        }
                     }
                 }else if(opcao == "2")
                 {
-                    string subMenu = telaProduto.ApresentarMenu();
+                    string subMenu = "";
 
-                    if (subMenu == "1")
+                    while (subMenu != "0")
                     {
-                        telaProduto.InserirNovoRegistro();
-                    }
-                    else if (subMenu == "2")
-                    {
-                        telaProduto.VisualizarRegistros(true);
-                        Console.ReadLine();
-                    }
-                    else if (subMenu == "3")
-                    {
-                        telaProduto.EditarRegistro();
-                    }
-                    else if (subMenu == "4")
-                    {
-                        telaProduto.ExcluirRegistro();
+                        subMenu = telaProduto.ApresentarMenu();
+                        if (subMenu == "1")
+                        {
+                            telaProduto.InserirNovoRegistro();
+                        }
+                        else if (subMenu == "2")
+                        {
+                            telaProduto.VisualizarRegistros(true);
+                            Console.ReadLine();
+                        }
+                        else if (subMenu == "3")
+                        {
+                            telaProduto.EditarRegistro();
+                        }
+                        else if (subMenu == "4")
+                        {
+                            telaProduto.ExcluirRegistro();
+                        }
                     }
                 }else if(opcao == "3")
                 {
-                    string subMenu = telaMesa.ApresentarMenu();
+                    string subMenu = "";
 
-                    if (subMenu == "1")
+                    while (subMenu != "0")
                     {
-                        telaMesa.InserirNovoRegistro();
-                    }
-                    else if (subMenu == "2")
-                    {
-                        telaMesa.VisualizarRegistros(true);
-                        Console.ReadLine();
-                    }
-                    else if (subMenu == "3")
-                    {
-                        telaMesa.EditarRegistro();
-                    }
-                    else if (subMenu == "4")
-                    {
-                        telaMesa.ExcluirRegistro();
+                        subMenu = telaMesa.ApresentarMenu();
+                        if (subMenu == "1")
+                        {
+                            telaMesa.InserirNovoRegistro();
+                        }
+                        else if (subMenu == "2")
+                        {
+                            telaMesa.VisualizarRegistros(true);
+                            Console.ReadLine();
+                        }
+                        else if (subMenu == "3")
+                        {
+                            telaMesa.EditarRegistro();
+                        }
+                        else if (subMenu == "4")
+                        {
+                            telaMesa.ExcluirRegistro();
+                        }
                     }
                 }
                 else if (opcao == "4")
                 {
-                    string subMenu = telaConta.ApresentarMenu();
+                    string subMenu = "";
 
-                    if (subMenu == "1")
+                    while (subMenu != "0")
                     {
-                        telaConta.InserirNovoRegistro();
-                    }
-                    else if (subMenu == "2")
-                    {
-                        telaConta.ObterNovoPedido();
-                    }
-                    else if (subMenu == "3")
-                    {
-                        telaConta.VisualizarRegistros(true);
-                        Console.ReadLine();
-                    }
-                    else if (subMenu == "4")
-                    {
-                        telaConta.FecharConta();
-                    }
-                    else if (subMenu == "5")
-                    {
-                        telaConta.VisualizaTotalFaturado();
-                        Console.ReadLine();
+                        subMenu = telaConta.ApresentarMenu();
+                        if (subMenu == "1")
+                        {
+                            telaConta.InserirNovoRegistro();
+                        }
+                        else if (subMenu == "2")
+                        {
+                            telaConta.ObterNovoPedido();
+                        }
+                        else if (subMenu == "3")
+                        {
+                            telaConta.VisualizarRegistros(true);
+                            Console.ReadLine();
+                        }
+                        else if (subMenu == "4")
+                        {
+                            telaConta.FecharConta();
+                        }
+                        else if (subMenu == "5")
+                        {
+                            telaConta.VisualizaTotalFaturado();
+                            Console.ReadLine();
+                        }
                     }
 
                 }

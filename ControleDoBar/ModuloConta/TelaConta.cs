@@ -5,6 +5,7 @@ using Controle_do_Bar.ModuloPedido;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,22 +17,28 @@ namespace Controle_do_Bar.ModuloConta
         RepositorioConta repositorioConta;
 
         TelaMesa telaMesa;
+        RepositorioMesa repositorioMesa;
 
         TelaGarcom telaGarcom;
+        RepositorioGarcom repositorioGarcom;
 
         TelaPedido telaPedido;
+        RepositorioPedido repositorioPedido;
 
 
-        public TelaConta(RepositorioBase repositorioBase, TelaMesa telaMesa, TelaGarcom telaGarcom, TelaPedido telaPedido) : base(repositorioBase)
+        public TelaConta(RepositorioBase repositorioBase, TelaMesa telaMesa, TelaGarcom telaGarcom, TelaPedido telaPedido, RepositorioMesa repositorioMesa, RepositorioGarcom repositorioGarcom, RepositorioPedido repositorioPedido) : base(repositorioBase)
         {
             nomeEntidadeSingular = "Conta";
             nomeEntidadePlural = "Contas";
-            this.repositorioConta = (RepositorioConta)repositorioBase;
+
+            repositorioConta = (RepositorioConta)repositorioBase;
             this.telaMesa = telaMesa;
             this.telaGarcom = telaGarcom;
             this.telaPedido = telaPedido;
+            this.repositorioMesa = repositorioMesa;
+            this.repositorioGarcom = repositorioGarcom;
+            this.repositorioPedido = repositorioPedido;
         }
-
 
         public override string ApresentarMenu()
         {
@@ -39,13 +46,12 @@ namespace Controle_do_Bar.ModuloConta
 
             Console.WriteLine($"Cadastro de {nomeEntidadePlural}\n");
 
+            Console.WriteLine($"Digite 0 para Sair");
             Console.WriteLine($"Digite 1 para Abrir {nomeEntidadeSingular}");
             Console.WriteLine($"Digite 2 para Fazer um Novo Pedido");
             Console.WriteLine($"Digite 3 para Visualizar {nomeEntidadePlural} Abertas");
             Console.WriteLine($"Digite 4 para Fechar {nomeEntidadeSingular}");
             Console.WriteLine($"Digita 5 para Visualizar Total Faturado\n");
-
-            Console.WriteLine("Digite s para Sair");
 
             string opcao = Console.ReadLine();
 
@@ -54,30 +60,45 @@ namespace Controle_do_Bar.ModuloConta
 
         protected override void MostrarTabela(ArrayList registros)
         {
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
             Console.WriteLine($"{"Id",-1} | {"Mesa",-15} | {"Garçom", -15} | Total");
             Console.WriteLine("-----------------------------------------");
 
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
             foreach (Conta conta in registros)
                 if (conta.isOpen)
                     Console.WriteLine($"{conta.id,-2} | {conta.mesa.numero,-15} | {conta.garcom.nome, -15} | R${conta.total}");
+            Console.ResetColor();
         }
 
         public void VisualizaTotalFaturado()
         {
             ArrayList lista = repositorioConta.SelecionarTodos();
+
             double total = 0;
+
             foreach (Conta conta in lista)
                 total += conta.total;
+
             Console.WriteLine("Total faturado: R$" + total);
         }
 
         protected override EntidadeBase ObterRegistro()
         {
+            if (!repositorioMesa.TemRegistros())
+                return new Conta();
 
             Mesa mesa = ObterMesa();
+
+            if (!repositorioGarcom.TemRegistros())
+                return new Conta();
+
             Garcom garcom = ObterGarcom();
+
             Pedido pedido = ObterPedido();
-            ArrayList listaPedidos = new ArrayList();
+
+            ArrayList listaPedidos = new();
+
             listaPedidos.Add(pedido);
             string x;
             do
@@ -89,9 +110,11 @@ namespace Controle_do_Bar.ModuloConta
                     pedido = ObterPedido();
                     listaPedidos.Add(pedido);
                 }
-            }while (x != "n");
+            }
+            while (x != "n");
 
             double total = 0;
+
             foreach (Pedido p in listaPedidos) 
                 total += p.total;
 
@@ -100,13 +123,39 @@ namespace Controle_do_Bar.ModuloConta
 
         public void ObterNovoPedido()
         {
+            MostrarCabecalho($"Cadastro de {nomeEntidadePlural}", "Fazendo novo Pedido...");
+
+            ArrayList registros = repositorioBase.SelecionarTodos();
+
+            if (registros.Count == 0)
+            {
+                MostrarMensagem("Nenhum registro cadastrado", ConsoleColor.DarkYellow);
+                return;
+            }
+
+
             VisualizarRegistros(false);
             
-            Console.WriteLine("Digite o id da conta: ");
+            Console.Write("Digite o id da conta: ");
             int id = Convert.ToInt32(Console.ReadLine());
+
             Conta conta = repositorioConta.SelecionarPorId(id);
+            if (!conta.isOpen)
+            {
+                MostrarMensagem("Esta conta está fechada", ConsoleColor.DarkRed);
+                return;
+            }
+
             Pedido pedido = ObterPedido();
+
             conta.listaPedidos.Add(pedido);
+
+            double total = 0;
+
+            foreach (Pedido p in conta.listaPedidos)
+                total += p.total;
+
+            conta.total = total;
         }
 
         private Mesa ObterMesa()
@@ -142,9 +191,31 @@ namespace Controle_do_Bar.ModuloConta
             return pedido;
         }
 
+        public override void InserirNovoRegistro()
+        {
+            MostrarCabecalho($"Cadastro de {nomeEntidadePlural}", "Inserindo um novo registro...");
+
+            EntidadeBase registro = ObterRegistro();
+
+            if (TemErrosDeValidacao(registro))
+                return;
+
+            repositorioBase.Inserir(registro);
+
+            MostrarMensagem("Registro inserido com sucesso!", ConsoleColor.Green);
+        }
+
         public void FecharConta()
         {
             MostrarCabecalho($"Cadastro de {nomeEntidadePlural}", "Fechando a conta...");
+
+            ArrayList registros = repositorioBase.SelecionarTodos();
+
+            if (registros.Count == 0)
+            {
+                MostrarMensagem("Nenhum registro cadastrado", ConsoleColor.DarkYellow);
+                return;
+            }
 
             VisualizarRegistros(false);
 

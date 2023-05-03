@@ -22,18 +22,21 @@ namespace Controle_do_Bar.ModuloPedido
 
         protected override void MostrarTabela(ArrayList registros)
         {
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
             Console.WriteLine($"{"Id",-1} | {"Produto",-15} | {"Quantidade",-15} | Total");
             Console.WriteLine("-----------------------------------------");
 
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
             foreach (Pedido pedido in registros)
                 Console.WriteLine($"{pedido.id,-2} | {pedido.produto.nome,-15} | {pedido.quantidade,-15} | R${pedido.total}");
+            Console.ResetColor();
         }
 
         protected override Pedido ObterRegistro()
         {
             Produto produto = ObterProduto();
 
-            Console.WriteLine("Digite a quantidade: ");
+            Console.Write("Digite a quantidade: ");
             int quantidade = Convert.ToInt32(Console.ReadLine());
 
             double total = produto.preco * quantidade;
@@ -45,7 +48,7 @@ namespace Controle_do_Bar.ModuloPedido
         {
             Produto produto = ObterProduto();
 
-            Console.WriteLine("Digite a quantidade: ");
+            Console.Write("Digite a quantidade: ");
             int quantidade = Convert.ToInt32(Console.ReadLine());
 
             double total = produto.preco * quantidade;

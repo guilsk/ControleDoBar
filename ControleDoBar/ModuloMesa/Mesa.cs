@@ -32,8 +32,8 @@ namespace Controle_do_Bar.ModuloMesa
         {
             ArrayList erros = new ArrayList();
 
-            if (double.IsNaN(numero))
-                erros.Add("O campo \"numero\" é obrigatório e deve ser um número válido");
+            if (numero <= 0)
+                erros.Add("O campo \"numero\" deve ser um número maior que 0");
 
             return erros;
         }
