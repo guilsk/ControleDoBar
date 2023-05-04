@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace Controle_do_Bar.ModuloGarcom
 {
-    public class TelaGarcom : TelaBase
+    public class TelaGarcom : TelaBase<Garcom>
     {
-        public TelaGarcom(RepositorioGarcom repositorioGarcom) : base(repositorioGarcom)
+        public TelaGarcom(RepositorioGarcom repositorioBase) : base(repositorioBase)
         {
             nomeEntidadeSingular = "Garçom";
             nomeEntidadePlural = "Garçons";
         }
 
-        protected override void MostrarTabela(ArrayList registros)
+        protected override void MostrarTabela(List<Garcom> registros)
         {
             Console.ForegroundColor = ConsoleColor.DarkBlue;
             Console.WriteLine($"{"Id",-1} | Nome");
@@ -28,7 +28,7 @@ namespace Controle_do_Bar.ModuloGarcom
             Console.ResetColor();
         }
 
-        protected override EntidadeBase ObterRegistro()
+        protected override Garcom ObterRegistro()
         {
             Console.Write("Digite o nome: ");
             string nome = Console.ReadLine();

@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Controle_do_Bar.Compartilhado
 {
-    public abstract class TelaBase
+    public abstract class TelaBase<T> where T : EntidadeBase
     {
         public string nomeEntidadeSingular = null;
         public string nomeEntidadePlural = null;
 
-        protected RepositorioBase repositorioBase = null;
+        protected RepositorioBase<T> repositorioBase = null;
 
-        protected TelaBase(RepositorioBase repositorioBase)
+        protected TelaBase(RepositorioBase<T> repositorioBase)
         {
             this.repositorioBase = repositorioBase;
         }
@@ -62,7 +62,7 @@ namespace Controle_do_Bar.Compartilhado
         {
             MostrarCabecalho($"Cadastro de {nomeEntidadePlural}", "Inserindo um novo registro...");
 
-            EntidadeBase registro = ObterRegistro();
+            T registro = ObterRegistro();
 
             if (TemErrosDeValidacao(registro))
             {
@@ -81,7 +81,7 @@ namespace Controle_do_Bar.Compartilhado
             if (mostrarCabecalho)
                 MostrarCabecalho($"Cadastro de {nomeEntidadePlural}", "Visualizando registros já cadastrados...");
 
-            ArrayList registros = repositorioBase.SelecionarTodos();
+            List<T> registros = repositorioBase.SelecionarTodos();
 
             if (registros.Count == 0)
             {
@@ -96,7 +96,7 @@ namespace Controle_do_Bar.Compartilhado
         {
             MostrarCabecalho($"Cadastro de {nomeEntidadePlural}", "Editando um registro já cadastrado...");
 
-            ArrayList registros = repositorioBase.SelecionarTodos();
+            List<T> registros = repositorioBase.SelecionarTodos();
 
             if (registros.Count == 0)
             {
@@ -108,9 +108,9 @@ namespace Controle_do_Bar.Compartilhado
 
             Console.WriteLine();
 
-            EntidadeBase registro = EncontrarRegistro("Digite o id do registro: ");
+            T registro = EncontrarRegistro("Digite o id do registro: ");
 
-            EntidadeBase registroAtualizado = ObterRegistro();
+            T registroAtualizado = ObterRegistro();
 
             if (TemErrosDeValidacao(registroAtualizado))
             {
@@ -128,7 +128,7 @@ namespace Controle_do_Bar.Compartilhado
         {
             MostrarCabecalho($"Cadastro de {nomeEntidadePlural}", "Excluindo um registro já cadastrado...");
 
-            ArrayList registros = repositorioBase.SelecionarTodos();
+            List<T> registros = repositorioBase.SelecionarTodos();
 
             if (registros.Count == 0)
             {
@@ -140,17 +140,17 @@ namespace Controle_do_Bar.Compartilhado
 
             Console.WriteLine();
 
-            EntidadeBase registro = EncontrarRegistro("Digite o id do registro: ");
+            T registro = EncontrarRegistro("Digite o id do registro: ");
 
             repositorioBase.Excluir(registro);
 
             MostrarMensagem("Registro excluído com sucesso!", ConsoleColor.Green);
         }
 
-        public virtual EntidadeBase EncontrarRegistro(string textoCampo)
+        public virtual T EncontrarRegistro(string textoCampo)
         {
             bool idInvalido;
-            EntidadeBase registroSelecionado = null;
+            T registroSelecionado = null;
 
             do
             {
@@ -178,11 +178,11 @@ namespace Controle_do_Bar.Compartilhado
             return registroSelecionado;
         }
 
-        protected bool TemErrosDeValidacao(EntidadeBase registro)
+        protected bool TemErrosDeValidacao(T registro)
         {
             bool temErros = false;
 
-            ArrayList erros = registro.Validar();
+            List<string> erros = registro.Validar();
 
             if (erros.Count > 0)
             {
@@ -202,9 +202,9 @@ namespace Controle_do_Bar.Compartilhado
             return temErros;
         }
 
-        protected abstract EntidadeBase ObterRegistro();
+        protected abstract T ObterRegistro();
 
-        protected abstract void MostrarTabela(ArrayList registros);
+        protected abstract void MostrarTabela(List<T> registros);
 
     }
 }

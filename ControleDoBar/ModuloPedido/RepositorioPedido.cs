@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace Controle_do_Bar.ModuloPedido
 {
-    public class RepositorioPedido : RepositorioBase
+    public class RepositorioPedido : RepositorioBase<Pedido>
     {
-        public RepositorioPedido(ArrayList listaPedidos)
+        public RepositorioPedido(List<Pedido> listaPedidos)
         {
             listaRegistros = listaPedidos;
         }
 
         public override Pedido SelecionarPorId(int id)
         {
-            return (Pedido)base.SelecionarPorId(id);
+            return base.SelecionarPorId(id);
         }
     }
 }

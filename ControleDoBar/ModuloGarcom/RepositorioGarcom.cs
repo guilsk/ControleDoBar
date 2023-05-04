@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace Controle_do_Bar.ModuloGarcom
 {
-    public class RepositorioGarcom : RepositorioBase
+    public class RepositorioGarcom : RepositorioBase<Garcom>
     {
-        public RepositorioGarcom(ArrayList listaGarcom)
+        public RepositorioGarcom(List<Garcom> listaGarcom)
         {
             listaRegistros = listaGarcom;
         }
 
         public override Garcom SelecionarPorId(int id)
         {
-            return (Garcom)base.SelecionarPorId(id);
+            return base.SelecionarPorId(id);
         }
     }
 }

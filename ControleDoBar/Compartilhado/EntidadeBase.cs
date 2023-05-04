@@ -13,7 +13,7 @@ namespace Controle_do_Bar.Compartilhado
 
         public abstract void AtualizarInformacoes(EntidadeBase registroAtualizado);
 
-        public abstract ArrayList Validar();
+        public abstract List<string> Validar();
 
     }
 }

@@ -29,7 +29,7 @@ namespace Controle_do_Bar.ModuloPedido
             throw new NotImplementedException();
         }
 
-        public override ArrayList Validar()
+        public override List<string> Validar()
         {
             throw new NotImplementedException();
         }

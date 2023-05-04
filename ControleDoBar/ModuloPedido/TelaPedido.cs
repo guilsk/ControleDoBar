@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace Controle_do_Bar.ModuloPedido
 {
-    public class TelaPedido : TelaBase
+    public class TelaPedido : TelaBase<Pedido>
     {
         public TelaProduto telaProduto;
 
-        public TelaPedido(RepositorioBase repositorioBase, TelaProduto telaProduto) : base(repositorioBase)
+        public TelaPedido(RepositorioPedido repositorioBase, TelaProduto telaProduto) : base(repositorioBase)
         {
             nomeEntidadeSingular = "Pedido";
             nomeEntidadePlural = "Pedidos";
             this.telaProduto = telaProduto;
         }
 
-        protected override void MostrarTabela(ArrayList registros)
+        protected override void MostrarTabela(List<Pedido> registros)
         {
             Console.ForegroundColor = ConsoleColor.DarkBlue;
             Console.WriteLine($"{"Id",-1} | {"Produto",-15} | {"Quantidade",-15} | Total");
@@ -60,7 +60,7 @@ namespace Controle_do_Bar.ModuloPedido
         {
             telaProduto.VisualizarRegistros(false);
 
-            Produto produto = (Produto)telaProduto.EncontrarRegistro("Digite o id do produto: ");
+            Produto produto = telaProduto.EncontrarRegistro("Digite o id do produto: ");
 
             Console.WriteLine();
 

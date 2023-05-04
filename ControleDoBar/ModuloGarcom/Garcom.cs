@@ -27,9 +27,9 @@ namespace Controle_do_Bar.ModuloGarcom
                 
         }
 
-        public override ArrayList Validar()
+        public override List<string> Validar()
         {
-            ArrayList erros = new ArrayList();
+            List<string> erros = new List<string>();
 
             if (string.IsNullOrEmpty(nome.Trim()))
                 erros.Add("O campo \"nome\" é obrigatório");

@@ -39,9 +39,9 @@ namespace Controle_do_Bar.ModuloConta
             total = contaAtualizada.total;
         }
 
-        public override ArrayList Validar()
+        public override List<string> Validar()
         {
-            ArrayList erros = new();
+            List<string> erros = new();
 
             if (mesa == null)
                 erros.Add("Nenhuma mesa cadastrada");

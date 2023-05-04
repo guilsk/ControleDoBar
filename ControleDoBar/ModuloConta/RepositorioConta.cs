@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace Controle_do_Bar.ModuloConta
 {
-    public class RepositorioConta : RepositorioBase
+    public class RepositorioConta : RepositorioBase<Conta>
     {
-        public RepositorioConta(ArrayList listaConta)
+        public RepositorioConta(List<Conta> listaConta)
         {
             listaRegistros = listaConta;
         }
 
         public override Conta SelecionarPorId(int id)
         {
-            return (Conta)base.SelecionarPorId(id);
+            return base.SelecionarPorId(id);
         }
     }
 }

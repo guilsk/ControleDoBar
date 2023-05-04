@@ -28,9 +28,9 @@ namespace Controle_do_Bar.ModuloMesa
             ocupada = mesaAtualizada.ocupada;
         }
 
-        public override ArrayList Validar()
+        public override List<string> Validar()
         {
-            ArrayList erros = new ArrayList();
+            List<string> erros = new List<string>();
 
             if (numero <= 0)
                 erros.Add("O campo \"numero\" deve ser um número maior que 0");

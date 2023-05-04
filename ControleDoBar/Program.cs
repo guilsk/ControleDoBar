@@ -13,20 +13,20 @@ namespace Controle_do_Bar
     {
         static void Main(string[] args)
         {
-            RepositorioGarcom repositorioGarcom = new(new ArrayList());
+            RepositorioGarcom repositorioGarcom = new(new List<Garcom>());
             TelaGarcom telaGarcom = new(repositorioGarcom);
 
-            RepositorioProduto repositorioProduto = new(new ArrayList());
+            RepositorioProduto repositorioProduto = new(new List<Produto>());
             TelaProduto telaProduto = new(repositorioProduto);
 
-            RepositorioPedido repositorioPedido = new(new ArrayList());
+            RepositorioPedido repositorioPedido = new(new List<Pedido>());
             TelaPedido telaPedido = new(repositorioPedido, telaProduto);
 
-            RepositorioMesa repositorioMesa = new(new ArrayList());
+            RepositorioMesa repositorioMesa = new(new List<Mesa>());
             TelaMesa telaMesa = new(repositorioMesa);
 
-            RepositorioConta repositorioConta = new(new ArrayList());
-            TelaConta telaConta = new(repositorioConta, telaMesa, telaGarcom, telaPedido, repositorioMesa, repositorioGarcom, repositorioPedido);
+            RepositorioConta repositorioConta = new(new List<Conta>());
+            TelaConta telaConta = new(repositorioConta, telaMesa, telaGarcom, telaPedido, repositorioMesa, repositorioGarcom);
 
             while (true)
             {

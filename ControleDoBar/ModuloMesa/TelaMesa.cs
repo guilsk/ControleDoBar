@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace Controle_do_Bar.ModuloMesa
 {
-    public class TelaMesa : TelaBase
+    public class TelaMesa : TelaBase<Mesa>
     {
-        public TelaMesa(RepositorioBase repositorioBase) : base(repositorioBase)
+        public TelaMesa(RepositorioMesa repositorioBase) : base(repositorioBase)
         {
             nomeEntidadeSingular = "Mesa";
             nomeEntidadePlural = "Mesas";
         }
 
-        protected override void MostrarTabela(ArrayList registros)
+        protected override void MostrarTabela(List<Mesa> registros)
         {
             Console.ForegroundColor = ConsoleColor.DarkBlue;
             Console.WriteLine($"{"Id",-1} | {"Número", -15} | Situação");
@@ -31,7 +31,7 @@ namespace Controle_do_Bar.ModuloMesa
             Console.ResetColor();
         }
 
-        protected override EntidadeBase ObterRegistro()
+        protected override Mesa ObterRegistro()
         {
             Console.Write("Digite o número: ");
             int numero;

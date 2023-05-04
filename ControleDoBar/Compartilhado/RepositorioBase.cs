@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Controle_do_Bar.Compartilhado
 {
-    public abstract class RepositorioBase
+    public abstract class RepositorioBase<T> where T : EntidadeBase
     {
-        protected ArrayList listaRegistros;
+        protected List<T> listaRegistros;
         protected int contadorRegistros = 0;
 
-        public virtual void Inserir(EntidadeBase registro)
+        public virtual void Inserir(T registro)
         {
             contadorRegistros++;
 
@@ -21,35 +21,35 @@ namespace Controle_do_Bar.Compartilhado
             listaRegistros.Add(registro);
         }
 
-        public virtual void Editar(int id, EntidadeBase registroAtualizado)
+        public virtual void Editar(int id, T registroAtualizado)
         {
-            EntidadeBase registroSelecionado = SelecionarPorId(id);
+            T registroSelecionado = SelecionarPorId(id);
 
             registroSelecionado.AtualizarInformacoes(registroAtualizado);
         }
 
-        public virtual void Editar(EntidadeBase registroSelecionado, EntidadeBase registroAtualizado)
+        public virtual void Editar(T registroSelecionado, T registroAtualizado)
         {
             registroSelecionado.AtualizarInformacoes(registroAtualizado);
         }
 
         public virtual void Excluir(int id)
         {
-            EntidadeBase registroSelecionado = SelecionarPorId(id);
+            T registroSelecionado = SelecionarPorId(id);
 
             listaRegistros.Remove(registroSelecionado);
         }
 
-        public virtual void Excluir(EntidadeBase registroSelecionado)
+        public virtual void Excluir(T registroSelecionado)
         {
             listaRegistros.Remove(registroSelecionado);
         }
 
-        public virtual EntidadeBase SelecionarPorId(int id)
+        public virtual T SelecionarPorId(int id)
         {
-            EntidadeBase registroSelecionado = null;
+            T registroSelecionado = null;
 
-            foreach (EntidadeBase registro in listaRegistros)
+            foreach (T registro in listaRegistros)
             {
                 if (registro.id == id)
                 {
@@ -61,7 +61,7 @@ namespace Controle_do_Bar.Compartilhado
             return registroSelecionado;
         }
 
-        public virtual ArrayList SelecionarTodos()
+        public virtual List<T> SelecionarTodos()
         {
             return listaRegistros;
         }

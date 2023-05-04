@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Controle_do_Bar.ModuloConta
 {
-    public class TelaConta : TelaBase
+    public class TelaConta : TelaBase<Conta>
     {
         RepositorioConta repositorioConta;
 
@@ -23,21 +23,19 @@ namespace Controle_do_Bar.ModuloConta
         RepositorioGarcom repositorioGarcom;
 
         TelaPedido telaPedido;
-        RepositorioPedido repositorioPedido;
 
 
-        public TelaConta(RepositorioBase repositorioBase, TelaMesa telaMesa, TelaGarcom telaGarcom, TelaPedido telaPedido, RepositorioMesa repositorioMesa, RepositorioGarcom repositorioGarcom, RepositorioPedido repositorioPedido) : base(repositorioBase)
+        public TelaConta(RepositorioConta repositorioBase, TelaMesa telaMesa, TelaGarcom telaGarcom, TelaPedido telaPedido, RepositorioMesa repositorioMesa, RepositorioGarcom repositorioGarcom) : base(repositorioBase)
         {
             nomeEntidadeSingular = "Conta";
             nomeEntidadePlural = "Contas";
 
-            repositorioConta = (RepositorioConta)repositorioBase;
+            repositorioConta = repositorioBase;
             this.telaMesa = telaMesa;
             this.telaGarcom = telaGarcom;
             this.telaPedido = telaPedido;
             this.repositorioMesa = repositorioMesa;
             this.repositorioGarcom = repositorioGarcom;
-            this.repositorioPedido = repositorioPedido;
         }
 
         public override string ApresentarMenu()
@@ -58,7 +56,7 @@ namespace Controle_do_Bar.ModuloConta
             return opcao;
         }
 
-        protected override void MostrarTabela(ArrayList registros)
+        protected override void MostrarTabela(List<Conta> registros)
         {
             Console.ForegroundColor = ConsoleColor.DarkBlue;
             Console.WriteLine($"{"Id",-1} | {"Mesa",-15} | {"Garçom", -15} | Total");
@@ -73,7 +71,7 @@ namespace Controle_do_Bar.ModuloConta
 
         public void VisualizaTotalFaturado()
         {
-            ArrayList lista = repositorioConta.SelecionarTodos();
+            List<Conta> lista = repositorioConta.SelecionarTodos();
 
             double total = 0;
 
@@ -83,7 +81,7 @@ namespace Controle_do_Bar.ModuloConta
             Console.WriteLine("Total faturado: R$" + total);
         }
 
-        protected override EntidadeBase ObterRegistro()
+        protected override Conta ObterRegistro()
         {
             if (!repositorioMesa.TemRegistros())
                 return new Conta();
@@ -97,9 +95,7 @@ namespace Controle_do_Bar.ModuloConta
 
             Pedido pedido = ObterPedido();
 
-            ArrayList listaPedidos = new();
-
-            listaPedidos.Add(pedido);
+            ArrayList listaPedidos = new(){pedido};
             string x;
             do
             {
@@ -125,7 +121,7 @@ namespace Controle_do_Bar.ModuloConta
         {
             MostrarCabecalho($"Cadastro de {nomeEntidadePlural}", "Fazendo novo Pedido...");
 
-            ArrayList registros = repositorioBase.SelecionarTodos();
+            List<Conta> registros = repositorioBase.SelecionarTodos();
 
             if (registros.Count == 0)
             {
@@ -162,7 +158,7 @@ namespace Controle_do_Bar.ModuloConta
         {
             telaMesa.VisualizarRegistros(false);
 
-            Mesa mesa = (Mesa)telaMesa.EncontrarRegistro("Digite o id da mesa: ");
+            Mesa mesa = telaMesa.EncontrarRegistro("Digite o id da mesa: ");
             mesa.ocupada = true;
 
             Console.WriteLine();
@@ -174,7 +170,7 @@ namespace Controle_do_Bar.ModuloConta
         {
             telaGarcom.VisualizarRegistros(false);
 
-            Garcom garcom = (Garcom)telaGarcom.EncontrarRegistro("Digite o id do garçom: ");
+            Garcom garcom = telaGarcom.EncontrarRegistro("Digite o id do garçom: ");
 
             Console.WriteLine();
 
@@ -195,7 +191,7 @@ namespace Controle_do_Bar.ModuloConta
         {
             MostrarCabecalho($"Cadastro de {nomeEntidadePlural}", "Inserindo um novo registro...");
 
-            EntidadeBase registro = ObterRegistro();
+            Conta registro = ObterRegistro();
 
             if (TemErrosDeValidacao(registro))
                 return;
@@ -209,7 +205,7 @@ namespace Controle_do_Bar.ModuloConta
         {
             MostrarCabecalho($"Cadastro de {nomeEntidadePlural}", "Fechando a conta...");
 
-            ArrayList registros = repositorioBase.SelecionarTodos();
+            List<Conta> registros = repositorioBase.SelecionarTodos();
 
             if (registros.Count == 0)
             {
@@ -221,7 +217,7 @@ namespace Controle_do_Bar.ModuloConta
 
             Console.WriteLine();
 
-            Conta registro = (Conta)EncontrarRegistro("Digite o id do registro: ");
+            Conta registro = EncontrarRegistro("Digite o id do registro: ");
 
             registro.isOpen = false;
 

@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace Controle_do_Bar.ModuloMesa
 {
-    public class RepositorioMesa : RepositorioBase
+    public class RepositorioMesa : RepositorioBase<Mesa>
     {
-        public RepositorioMesa(ArrayList listaMesas)
+        public RepositorioMesa(List<Mesa> listaMesas)
         {
             listaRegistros = listaMesas;
         }
 
         public override Mesa SelecionarPorId(int id)
         {
-            return (Mesa)base.SelecionarPorId(id);
+            return base.SelecionarPorId(id);
         }
     }
 }

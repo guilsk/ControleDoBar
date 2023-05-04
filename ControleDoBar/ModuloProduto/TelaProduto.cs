@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace Controle_do_Bar.ModuloProduto
 {
-    public class TelaProduto : TelaBase
+    public class TelaProduto : TelaBase<Produto>
     {
-        public TelaProduto(RepositorioBase repositorioBase) : base(repositorioBase)
+        public TelaProduto(RepositorioProduto repositorioBase) : base(repositorioBase)
         {
             nomeEntidadeSingular = "Produto";
             nomeEntidadePlural = "Produtos";
         }
 
-        protected override void MostrarTabela(ArrayList registros)
+        protected override void MostrarTabela(List<Produto> registros)
         {
             Console.ForegroundColor = ConsoleColor.DarkBlue;
             Console.WriteLine($"{"Id",-1} | {"Nome", -15} | Preço");
