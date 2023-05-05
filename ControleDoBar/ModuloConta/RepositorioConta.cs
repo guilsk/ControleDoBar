@@ -14,10 +14,5 @@ namespace Controle_do_Bar.ModuloConta
         {
             listaRegistros = listaConta;
         }
-
-        public override Conta SelecionarPorId(int id)
-        {
-            return base.SelecionarPorId(id);
-        }
     }
 }

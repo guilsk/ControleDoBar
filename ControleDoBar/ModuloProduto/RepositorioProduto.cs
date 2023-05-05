@@ -14,10 +14,5 @@ namespace Controle_do_Bar.ModuloProduto
         {
             this.listaRegistros = listaProdutos;
         }
-
-        public override Produto SelecionarPorId(int id)
-        {
-            return base.SelecionarPorId(id);
-        }
     }
 }

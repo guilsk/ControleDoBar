@@ -14,10 +14,5 @@ namespace Controle_do_Bar.ModuloGarcom
         {
             listaRegistros = listaGarcom;
         }
-
-        public override Garcom SelecionarPorId(int id)
-        {
-            return base.SelecionarPorId(id);
-        }
     }
 }

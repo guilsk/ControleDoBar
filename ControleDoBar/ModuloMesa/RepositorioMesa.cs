@@ -14,10 +14,5 @@ namespace Controle_do_Bar.ModuloMesa
         {
             listaRegistros = listaMesas;
         }
-
-        public override Mesa SelecionarPorId(int id)
-        {
-            return base.SelecionarPorId(id);
-        }
     }
 }
