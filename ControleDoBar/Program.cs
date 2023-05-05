@@ -1,11 +1,8 @@
-﻿using Controle_do_Bar.Compartilhado;
-using Controle_do_Bar.ModuloConta;
+﻿using Controle_do_Bar.ModuloConta;
 using Controle_do_Bar.ModuloGarcom;
 using Controle_do_Bar.ModuloMesa;
 using Controle_do_Bar.ModuloPedido;
 using Controle_do_Bar.ModuloProduto;
-using System;
-using System.Collections;
 
 namespace Controle_do_Bar
 {
@@ -64,7 +61,8 @@ namespace Controle_do_Bar
                             telaGarcom.ExcluirRegistro();
                         }
                     }
-                }else if(opcao == "2")
+                }
+                else if(opcao == "2")
                 {
                     string subMenu = "";
 
@@ -89,7 +87,8 @@ namespace Controle_do_Bar
                             telaProduto.ExcluirRegistro();
                         }
                     }
-                }else if(opcao == "3")
+                }
+                else if(opcao == "3")
                 {
                     string subMenu = "";
 
@@ -145,9 +144,7 @@ namespace Controle_do_Bar
                             Console.ReadLine();
                         }
                     }
-
                 }
-
             }
         }
     }
